@@ -5,13 +5,14 @@ class myNode{
 	int data;
 	myNode next;
 	myNode random;
-		
+	myNode(int d){
+		this.data =d;
+	}
 }
 public class CloneList {
 
 	public static myNode Insert(myNode head,int data) {
-        myNode n = new myNode();
-        n.data = data;
+        myNode n = new myNode(data);
         n.next = null;
         n.random = null;
 		
@@ -52,15 +53,16 @@ public class CloneList {
 		//System.out.print(m4.random.data+" ");
 		
 		start = root;
-		myNode m5 = root.next.next.next;
+		myNode m5 = root.next.next.next.next;
 		m5.random = start.next;
 		//System.out.print(m5.random.data+" ");
 		
 	}
 	public static void printLinkedList(myNode root){
 		myNode d = root;		
+		System.out.println();
 		while(d!=null){
-			System.out.print(d.data+" ");
+			System.out.println("Data: "+d.data+" Random: "+d.random.data);
 			d = d.next;
 		}		
 	}
@@ -69,19 +71,38 @@ public class CloneList {
 		myNode sroot=null;
 		myNode start = root;
 		int count = 0;
+		
 		while(start!=null){						
 			count++;
-			sroot = Insert(sroot,start.data);
-			start=start.next;
+			myNode c = new myNode(start.data);
+			c.next = start.next;
+			start.next = c;			
+			start=start.next.next;
 		}
 		
 		start = root;
-		myNode sstart = sroot;
 		while(start!=null){
-			myNode xx = start.random;
-			int v = xx.data;
+			if(start.random !=null)
+				start.next.random = start.random.next;
+			else
+				start.next.random = null;
+			start = start.next.next;
 		}
-		return sroot;
+		
+		start = root;
+		myNode newHead = start.next;
+		myNode sstart = newHead;
+		while(sstart!=null){
+			
+			start.next = sstart.next;
+			
+			if(sstart.next!=null)
+				sstart.next = sstart.next.next;
+			
+			start = start.next;
+			sstart = sstart.next;
+		}
+		return newHead;
 	}
 	public static void main(String[] args) {
 		
@@ -95,9 +116,11 @@ public class CloneList {
 		setRandom(root);
 		printLinkedList(root);
 		
+		
 		myNode dup=null;
 		dup=cloneLinkedList(root);
 		printLinkedList(dup);
+	
 	}
 
 }
