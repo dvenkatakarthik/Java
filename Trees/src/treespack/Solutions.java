@@ -7,6 +7,15 @@ public class Solutions {
 /*
 
 
+boolean checkBST(Node root) {     
+    return isBST(root, -1, 10001);
+}   
+boolean isBST(Node node,int min,int max){        
+    if (node==null) return true;
+    if (node.data <= min || node.data >= max) return false;    
+    return isBST(node.left, min, node.data) && isBST(node.right, node.data, max);  
+}
+
 static Node lca(Node root,int v1,int v2)
 {
     if(root == null)
