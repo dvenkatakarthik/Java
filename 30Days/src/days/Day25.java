@@ -2,6 +2,8 @@ package days;
 
 import java.util.Scanner;
 
+
+
 public class Day25 {
 
 	public static void main(String[] args) {
